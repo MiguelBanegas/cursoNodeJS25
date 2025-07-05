@@ -7,9 +7,9 @@ app.use(cors()); // Middleware para permitir solicitudes CORS
 app.use(express.json()); // Middleware para parsear JSON en el cuerpo de las solicitudes
 
 
-import productsRoutes from './src/routes/products.routes.js'; // Importar las rutas de productos
+import dataRoutes from './src/routes/data.routes.js'; // Importar las rutas de las mediciones
 
-app.use("/api/v1", productsRoutes); // Usar las rutas de productos
+app.use("/api/v1", dataRoutes); // Usar las rutas de las mediciones
 
 app.use((req, res, next) => {
     res.status(404).json({ error: 'Ruta no encontrada' });
