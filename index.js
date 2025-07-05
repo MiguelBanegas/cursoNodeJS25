@@ -1,20 +1,24 @@
 import express  from 'express';
+import cors from 'cors'; // Importar el middleware CORS
 const app = express();
 const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
 
-const productos = [
-  { id: 1, nombre: "A", precio: 100 },
-  { id: 2, nombre: "B", precio: 150 },
-  { id: 3, nombre: "C", precio: 200 }];
+app.use(express.json()); // Middleware para parsear JSON en el cuerpo de las solicitudes
+app.use(cors()); // Middleware para permitir solicitudes CORS
+const productos = [{ id: 1, nombre: "A", precio: 100 },
+  { id: 2, nombre: "Ba", precio: 150 },
+  { id: 3, nombre: "Caa", precio: 200 }];
+
+  app.post('/producto', (req, res) => {
+    console.log(req.body); // Log para verificar el cuerpo de la solicitud
+    res.send('Post recibido correctamente');
+});
 
 app.get('/', (req, res) => {
   res.send('<h1>Esta es na API en Node.js con Nodemon</h1>');    
 });
 
-app.get('/producto/:id',(req, res) => {
+app.get('/producto/id/:id',(req, res) => {
   const id = parseInt(req.params.id); 
   const nombre = req.query.nombre; // Obtener el parámetro de consulta 'nombre'
   console.log(`ID recibido: ${id}`); // Log para verificar el ID recibido
@@ -44,5 +48,9 @@ app.get('/producto/nombre/:nombre', (req, res) => {
 
 app.get('/productos', (req, res) => {
   res.json(productos);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
