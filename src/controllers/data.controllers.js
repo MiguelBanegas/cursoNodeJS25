@@ -1,5 +1,5 @@
 import * as service from '../services/data.services.js'; // Importar el servicio de datos AS SERVICE para evitar conflictos de nombres
-import * as model from '../models/data.models.js'; // Importar el modelo para obtener una medición por ID
+import * as model from '../models/data.models.js';
 
 export const getAllMediciones = (req, res) => {
     res.json(service.getAllMediciones()); // Llamar al servicio para obtener todas las mediciones
@@ -29,4 +29,23 @@ export const nuevaMedicion = (req,res) => {
   const nuevaMed = model.nuevaMedicion({ idDisp, temp, hum }); // Llamar al modelo para crear una nueva medición
 
   res.status(201).json(nuevaMed); // Retornar la nueva medición creada con un código de estado 201
+};
+
+export const actualizarMedicion = (req, res) => {
+  const id = req.params.id;
+  const nuevosDatos = req.body;
+  const medicionActualizada = model.actualizarMedicion(id, nuevosDatos);
+  if (!medicionActualizada) {
+    return res.status(404).json({ error: "Medición no encontrada" });
+  }
+  res.json(medicionActualizada);
+};
+
+export const eliminarMedicion = (req, res) => {
+  const id = req.params.id;
+  const eliminada = model.eliminarMedicion(id);
+  if (!eliminada) {
+    return res.status(404).json({ error: "Medición no encontrada" });
+  }
+  res.json({ mensaje: "Medición eliminada", eliminada });
 };
