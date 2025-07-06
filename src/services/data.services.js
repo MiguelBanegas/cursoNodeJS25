@@ -1,8 +1,4 @@
-const data = [{ id: 1, idDisp: "esp32-1", temp: 35, hum: 60 },
-            { id: 2, idDisp: "esp32-2", temp: 45, hum: 15 },
-            { id: 3,idDisp: "esp32-3", temp: 3, hum: 20 },
-            { id: 4, idDisp: "esp32-2", temp: 5, hum: 45 }];
-
+import * as model from '../models/data.models.js';
 export const getAllMediciones = () => {
-    return data; // Retorna todas las mediciones del array
+    return model.getAllMediciones( ); // Retorna todas las mediciones del json de la carpeta models
 }
