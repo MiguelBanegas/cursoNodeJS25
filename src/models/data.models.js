@@ -17,3 +17,18 @@ export const getMedicionById = (id) => {
 export const getMedicionesSearch = (search) => {
     return data.filter(p => p.idDisp.includes(search) || p.temp.toString().includes(search) || p.hum.toString().includes(search)); // Retorna productos que coincidan con la búsqueda
 }
+
+export const nuevaMedicion = (datos) => {
+    //console.log({ ...data });
+
+  const nuevaMed = {
+    id: data.length + 1,
+    ...datos,
+  };
+
+  data.push(nuevaMed);
+
+  fs.writeFileSync(jsonPath, JSON.stringify(data)); // Actualiza el JSON con la nueva medición
+
+  return nuevaMed;
+};

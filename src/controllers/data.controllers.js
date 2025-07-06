@@ -21,3 +21,12 @@ export const getMedicionesSearch = (req, res) => {
     const mediciones = model.getMedicionesSearch(search); // Llamar al modelo para obtener las mediciones que coincidan con la búsqueda
     res.json(mediciones); // Retornar las mediciones encontradas
 }
+
+export const nuevaMedicion = (req,res) => {
+    console.log(req.body); // Imprimir el cuerpo de la solicitud para depuración
+  const { idDisp, temp, hum } = req.body;
+
+  const nuevaMed = model.nuevaMedicion({ idDisp, temp, hum }); // Llamar al modelo para crear una nueva medición
+
+  res.status(201).json(nuevaMed); // Retornar la nueva medición creada con un código de estado 201
+};
