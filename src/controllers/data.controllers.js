@@ -1,51 +1,79 @@
 import * as service from '../services/data.services.js'; // Importar el servicio de datos AS SERVICE para evitar conflictos de nombres
-import * as model from '../models/data.models.js';
 
-export const getAllMediciones = (req, res) => {
-    res.json(service.getAllMediciones()); // Llamar al servicio para obtener todas las mediciones
-}
-
-export const getMedicionById = (req, res) => {
-      const { id } = req.params;
-      const medicion = model.getMedicionById(parseInt(id)); // Llamar al modelo para obtener la medición por ID
-        if (!medicion) {
-            return res.status(404).json({ error: 'Medición no encontrada' }); // Manejar el caso en que no se encuentra la medición
-        }
-        res.json(medicion); // Retornar la medición encontrada
-}
-export const getMedicionesSearch = (req, res) => {
-    const { search } = req.query; // Obtener el parámetro de búsqueda de la consulta
-    if (!search) {
-        return res.status(400).json({ error: 'Parámetro de búsqueda es requerido' }); // Manejar el caso en que no se proporciona el parámetro de búsqueda
+export const getAllMediciones = async (req, res) => {
+    try {
+        const mediciones = await service.getAllMediciones();
+        res.json(mediciones);
+    } catch (error) {
+        console.error("Error en getAllMediciones:", error);
+        res.status(500).json({ error: "Error al obtener las mediciones" });
     }
-    const mediciones = model.getMedicionesSearch(search); // Llamar al modelo para obtener las mediciones que coincidan con la búsqueda
-    res.json(mediciones); // Retornar las mediciones encontradas
 }
 
-export const nuevaMedicion = (req,res) => {
-    console.log(req.body); // Imprimir el cuerpo de la solicitud para depuración
-  const { idDisp, temp, hum } = req.body;
+export const getMedicionById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const medicion = await service.getMedicionById(id);
+        if (!medicion) {
+            return res.status(404).json({ error: 'Medición no encontrada' });
+        }
+        res.json(medicion);
+    } catch (error) {
+        console.error("Error en getMedicionById:", error);
+        res.status(500).json({ error: "Error al obtener la medición" });
+    }
+}
 
-  const nuevaMed = model.nuevaMedicion({ idDisp, temp, hum }); // Llamar al modelo para crear una nueva medición
+export const getMedicionesSearch = async (req, res) => {
+    try {
+        const { search } = req.query;
+        if (!search) {
+            return res.status(400).json({ error: 'El parámetro "search" es requerido' });
+        }
+        const mediciones = await service.getMedicionesSearch(search);
+        res.json(mediciones);
+    } catch (error) {
+        console.error("Error en getMedicionesSearch:", error);
+        res.status(500).json({ error: "Error al buscar mediciones" });
+    }
+}
 
-  res.status(201).json(nuevaMed); // Retornar la nueva medición creada con un código de estado 201
+export const nuevaMedicion = async (req, res) => {
+    try {
+        const { idDisp, temp, hum } = req.body;
+        if (!idDisp || temp === undefined || hum === undefined) {
+            return res.status(400).json({ error: "Faltan campos requeridos: idDisp, temp, hum" });
+        }
+        const nuevaMed = await service.nuevaMedicion({ idDisp, temp, hum });
+        res.status(201).json(nuevaMed);
+    } catch (error) {
+        console.error("Error en nuevaMedicion:", error);
+        res.status(500).json({ error: "Error al crear la medición" });
+    }
 };
 
-export const actualizarMedicion = (req, res) => {
-  const id = req.params.id;
-  const nuevosDatos = req.body;
-  const medicionActualizada = model.actualizarMedicion(id, nuevosDatos);
-  if (!medicionActualizada) {
-    return res.status(404).json({ error: "Medición no encontrada" });
-  }
-  res.json(medicionActualizada);
+export const actualizarMedicion = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const nuevosDatos = req.body;
+        const medicionActualizada = await service.actualizarMedicion(id, nuevosDatos);
+        if (!medicionActualizada) {
+            return res.status(404).json({ error: "Medición no encontrada" });
+        }
+        res.json(medicionActualizada);
+    } catch (error) {
+        console.error("Error en actualizarMedicion:", error);
+        res.status(500).json({ error: "Error al actualizar la medición" });
+    }
 };
 
-export const eliminarMedicion = (req, res) => {
-  const id = req.params.id;
-  const eliminada = model.eliminarMedicion(id);
-  if (!eliminada) {
-    return res.status(404).json({ error: "Medición no encontrada" });
-  }
-  res.json({ mensaje: "Medición eliminada", eliminada });
+export const eliminarMedicion = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await service.eliminarMedicion(id);
+        res.status(200).json({ mensaje: "Medición eliminada correctamente" });
+    } catch (error) {
+        console.error("Error en eliminarMedicion:", error);
+        res.status(500).json({ error: "Error al eliminar la medición" });
+    }
 };
