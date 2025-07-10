@@ -1,7 +1,8 @@
 import express  from 'express';
+import 'dotenv/config';
 import cors from 'cors'; // Importar el middleware CORS
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors()); // Middleware para permitir solicitudes CORS
 app.use(express.json()); // Middleware para parsear JSON en el cuerpo de las solicitudes

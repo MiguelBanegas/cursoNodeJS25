@@ -4,19 +4,21 @@
 
 
 import {db} from "../data/data.js"; // Importa la configuración de Firebase
-import {
-  collection,
-  getDocs,
-  getDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc
-} from "firebase/firestore"; // Importa las funciones de Firestore
+import { 
+    collection, 
+    getDocs, 
+    getDoc, 
+    addDoc, 
+    updateDoc, 
+    deleteDoc, 
+    doc, 
+    query, 
+    where, 
+    orderBy } from "firebase/firestore"; // Importa las funciones de Firestore
 
 const medicionesCollection = collection(db, "mediciones"); // Colección de mediciones
 
-export async function getAllMediciones() {
+export async function getAllMediciones() { // Obtiene todas las mediciones
   try {
     const querySnapshot = await getDocs(medicionesCollection);
     const mediciones = [];
@@ -30,7 +32,7 @@ export async function getAllMediciones() {
   } 
 };
 
-export async function getMedicionById(id) {
+export async function getMedicionById(id) { // Obtiene una medición por su ID
   try {
     const docRef = doc(db, "mediciones", id);
     const docSnap = await getDoc(docRef);
@@ -45,30 +47,37 @@ export async function getMedicionById(id) {
   }
 };
 
-export async function getMedicionesSearch(search) {
-  const todas = await getAllMediciones();
+export async function getMedicionesSearch(search) { // Busca mediciones por un parámetro de búsqueda
+  
   const searchLower = search.toLowerCase();
-  return todas.filter(p => 
-    p.idDisp && p.idDisp.toLowerCase().includes(searchLower)
+  const q = query(
+    medicionesCollection,
+    where('idDisp', '>=', searchLower),
+    where('idDisp', '<=', searchLower + '\uf8ff') // Esto permite buscar por prefijo
   );
+
+  const querySnapshot = await getDocs(q);
+  const mediciones = [];
+  querySnapshot.forEach(doc => mediciones.push({ id: doc.id, ...doc.data() })); // Agrega cada documento encontrado al array
+  return mediciones; // Devuelve el array de mediciones encontradas
 };
 
-export async function nuevaMedicion (datos) {
+export async function nuevaMedicion (datos) { // Crea una nueva medición
   try {
     const nuevaMed = await addDoc(medicionesCollection, datos);
-    return { id: nuevaMed.id, ...datos };
+    return { id: nuevaMed.id, ...datos }; // Devuelve el ID del nuevo documento junto con los datos
   } catch (error) {
     console.error("Error al agregar la medición:", error);
     throw error;
   }
 };
 
-export async function actualizarMedicion(id, nuevosDatos) {
+export async function actualizarMedicion(id, nuevosDatos) { // Actualiza una medición por su ID
   try {
     const docRef = doc(db, "mediciones", id);
     await updateDoc(docRef, nuevosDatos);
     const docActualizado = await getDoc(docRef);
-    return { id: docActualizado.id, ...docActualizado.data() };
+    return { id: docActualizado.id, ...docActualizado.data() }; // Devuelve el documento actualizado
   } catch (error) {
     // Firestore lanza un error si el documento no existe, que se puede capturar.
     console.error("Error al actualizar la medición:", error);
@@ -78,10 +87,15 @@ export async function actualizarMedicion(id, nuevosDatos) {
   }
 };
 
-export async function eliminarMedicion(id) {
+export async function eliminarMedicion(id) { // Elimina una medición por su ID
   try {
     const docRef = doc(db, "mediciones", id);
-    await deleteDoc(docRef);
+    const docSnap = await getDoc(docRef); // Primero, verifica si el documento existe
+    if (!docSnap.exists()) {
+      return false; // Si no existe, avisa que no se encontró para eliminar
+    }
+    await deleteDoc(docRef); // Elimina el documento de la colección
+    return true; // Devuelve true para indicar que la eliminación fue exitosa
   } catch (error) {
     console.error("Error al eliminar la medición:", error);
     throw error;

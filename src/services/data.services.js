@@ -4,29 +4,6 @@ import { collection, getDocs, query, where, updateDoc, deleteDoc, doc } from "fi
 
 const medicionesCollection = collection(db, "mediciones");
 
-export async function getMedicionByIdNum(idNum) {
-    try {
-        const q = query(medicionesCollection, where("idNum", "==", Number(idNum)));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0];
-            return { id: doc.id, ...doc.data() };
-        }
-        return null;
-    } catch (error) {
-        console.error("Error al buscar medición por idNum:", error);
-        throw error;
-    }
-}
-
-export const getDocIdByIdNum = async (idNum) => {
-    const q = query(medicionesCollection, where("idNum", "==", Number(idNum)));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-        return querySnapshot.docs[0].id;
-    }
-    return null;
-}
 
 export const getAllMediciones = async () => {
     return await model.getAllMediciones();
@@ -54,18 +31,3 @@ export const eliminarMedicion = async (id) => {
     return await model.eliminarMedicion(id);
 }
 
-export async function actualizarMedicionPorIdNum(idNum, nuevosDatos) {
-    const docId = await getDocIdByIdNum(idNum);
-    if (!docId) return null;
-    const docRef = doc(db, "mediciones", docId);
-    await updateDoc(docRef, nuevosDatos);
-    return { id: docId, ...nuevosDatos, idNum: Number(idNum) };
-}
-
-export async function eliminarMedicionPorIdNum(idNum) {
-    const docId = await getDocIdByIdNum(idNum);
-    if (!docId) return false;
-    const docRef = doc(db, "mediciones", docId);
-    await deleteDoc(docRef);
-    return true;
-}
