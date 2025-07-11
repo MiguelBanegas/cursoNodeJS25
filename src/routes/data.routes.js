@@ -1,18 +1,24 @@
-import { Router } from "express";
+import { Router } from 'express';
+import {
+    getAllMediciones,
+    getMedicionById,
+    getMedicionesSearch,
+    nuevaMedicion,
+    actualizarMedicion,
+    eliminarMedicion
+} from '../controllers/data.controllers.js';
+import { authenticateToken, authorize } from '../middlewares/auth.middleware.js';
+
 const router = Router();
-export default router; // por default para poder llamar a router como quiera
 
-//metodo GET para obtener las mediciones
-import * as control from '../controllers/data.controllers.js';
+// Todas las rutas de mediciones requieren que el usuario esté autenticado y tenga rol 'user' o 'admin'
+router.use(authenticateToken, authorize(['user', 'admin']));
 
-router.get('/mediciones', control.getAllMediciones); // Ruta para obtener todas las mediciones
-router.get('/mediciones/id/:id', control.getMedicionById); // Ruta para obtener una medición por ID
+router.get('/', getAllMediciones);
+router.get('/search', getMedicionesSearch);
+router.get('/id/:id', getMedicionById);
+router.post('/', nuevaMedicion);
+router.put('/id/:id', actualizarMedicion);
+router.delete('/id/:id', eliminarMedicion);
 
-router.get("/mediciones/search", control.getMedicionesSearch); // Ruta para buscar mediciones por parámetro de búsqueda
-
-router.post("/mediciones", control.nuevaMedicion); // Ruta para crear una nueva medición
-
-router.put('/mediciones/id/:id', control.actualizarMedicion); // Ruta para actualizar una medición por ID
-
-router.delete('/mediciones/id/:id', control.eliminarMedicion); // Ruta para eliminar una medición por ID
-
+export default router;

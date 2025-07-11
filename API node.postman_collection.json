@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "f925d48c-d8f8-40dd-9657-9be403092858",
+		"name": "API node",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46498195"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/api/v1/users/Yb991AHYM7tHwwvJHLwA",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjE3OTA1LCJleHAiOjE3NTIyMjE1MDV9.pklrlZsZUJP6hW231fifOyEiTu-I-_Syx5prsxqyVbo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users/Yb991AHYM7tHwwvJHLwA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"Yb991AHYM7tHwwvJHLwA"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/users/OMk4pRIT8mQVtsxrtvYN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjE3OTA1LCJleHAiOjE3NTIyMjE1MDV9.pklrlZsZUJP6hW231fifOyEiTu-I-_Syx5prsxqyVbo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nombre\": \"Miguel\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users/OMk4pRIT8mQVtsxrtvYN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"OMk4pRIT8mQVtsxrtvYN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/users/OMk4pRIT8mQVtsxrtvYN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users/OMk4pRIT8mQVtsxrtvYN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"OMk4pRIT8mQVtsxrtvYN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/users/profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@test.com\",\r\n    \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/auth/register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Usuario test3\",\r\n    \"email\": \"admin@test3.com\",\r\n    \"password\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjEzNzg5LCJleHAiOjE3NTIyMTczODl9.Xk6hyAyTfftrO1QDw-7UAJFzT-iNJehAOeL5RVZ3EZQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones",
+						"id",
+						"lsDZ2LH0oLZWwRFDTLIl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjEzNzg5LCJleHAiOjE3NTIyMTczODl9.Xk6hyAyTfftrO1QDw-7UAJFzT-iNJehAOeL5RVZ3EZQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"temp\": 0,\r\n  \"hum\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones",
+						"id",
+						"lsDZ2LH0oLZWwRFDTLIl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjEzNzg5LCJleHAiOjE3NTIyMTczODl9.Xk6hyAyTfftrO1QDw-7UAJFzT-iNJehAOeL5RVZ3EZQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"idDisp\": \"esp32-99\",\r\n  \"temp\": 50,\r\n  \"hum\": 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones/search?search=esp32",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjEzNzg5LCJleHAiOjE3NTIyMTczODl9.Xk6hyAyTfftrO1QDw-7UAJFzT-iNJehAOeL5RVZ3EZQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones/search?search=esp32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones",
+						"search"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "esp32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones",
+						"id",
+						"lsDZ2LH0oLZWwRFDTLIl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/api/v1/mediciones",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9NazRwUklUOG1RVnRzeHJ0dllOIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzUyMjIwNTM2LCJleHAiOjE3NTIyMjQxMzZ9.4pm6MKdQEMsMIlD3UCGXUZQWT2fTbIW39p0xaQYmqjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/mediciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"mediciones"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

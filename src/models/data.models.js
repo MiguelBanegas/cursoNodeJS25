@@ -1,8 +1,3 @@
-// para leer un archivo JSON y usarlo como base de datos local
-/* import fs from "fs"; */
-/* import path from "path"; */
-
-
 import {db} from "../data/data.js"; // Importa la configuración de Firebase
 import { 
     collection, 
