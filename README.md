@@ -134,6 +134,42 @@ Inicia sesión y devuelve un token JWT válido por 1 hora.
 -   Elimina un usuario.
 -   **Permisos:** `admin`.
 
+**`PUT /users/:id/password`**  
+`https://curso-node-js-25.vercel.app/api/v1/users/:id/password`  
+
+- Ejemplo: `/lsDZ2LH0oLZWwRFDTLIl/password`
+-   Cambia la contraseña de un usuario específico.
+-   **Esta acción genera un registro de auditoría.**
+-   **Permisos:** `admin`.
+-   **Body (JSON):**
+    ```json
+    {
+        "password": "nuevaPasswordSegura123"
+    }
+    ```
+
+### Auditoría
+
+El sistema registra acciones críticas en una colección de Firestore llamada `audit_logs` para fines de seguridad y trazabilidad.
+
+**Colección:** `audit_logs`
+
+Cada vez que un administrador realiza una acción sensible, como cambiar la contraseña de un usuario, se crea un nuevo documento en esta colección.
+
+**Ejemplo de Registro de Auditoría (Cambio de Contraseña):**
+
+```json
+{
+    "action": "ADMIN_PASSWORD_CHANGE",
+    "adminId": "idDelAdminQueHizoElCambio",
+    "adminEmail": "admin@ejemplo.com",
+    "targetUserId": "idDelUsuarioAfectado",
+    "targetUserEmail": "usuario@ejemplo.com",
+    "timestamp": "2023-10-27T10:00:00.000Z"
+}
+```
+
+
 ### Mediciones (`/mediciones`)
 `https://curso-node-js-25.vercel.app/api/v1/mediciones`  
 *Requiere autenticación (Bearer Token) y rol `user` o `admin`.*
@@ -173,7 +209,7 @@ Inicia sesión y devuelve un token JWT válido por 1 hora.
 - **PUT** `/id/:id`  
   `https://curso-node-js-25.vercel.app/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
 - Ejemplo: `/id/lsDZ2LH0oLZWwRFDTLIl`
-- Enviar un JSON en el body con los campos a modificar (por ejemplo, `temp` o `hum`):
+- Enviar un JSON en el body con los campos a modificar (por ejemplo, `temp` o `hum`): (solo Admin)
   ```json
   {
     "temp": 30
@@ -186,7 +222,7 @@ Inicia sesión y devuelve un token JWT válido por 1 hora.
 - **DELETE** `/id/:id`  
   `https://curso-node-js-25.vercel.app/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
 - Ejemplo: `/id/lsDZ2LH0oLZWwRFDTLIl`
-- Elimina la medición con el ID especificado.
+- Elimina la medición con el ID especificado. (solo Admin)
 - Devuelve un Json con mensaje de confirmación y la medición eliminada.
 
 

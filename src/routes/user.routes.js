@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllUsers, getUserById, updateUser, deleteUser, getProfile } from '../controllers/user.controllers.js';
+import { getAllUsers, getUserById, updateUser, deleteUser, getProfile, changePassword } from '../controllers/user.controllers.js';
 import { authenticateToken, authorize } from '../middlewares/auth.middleware.js'; //middleware/auth.middleware.js';
 
 const router = Router();
@@ -24,5 +24,7 @@ router.get('/:id', authorize(['admin', 'user']), (req, res, next) => {
 router.put('/:id', authorize(['admin', 'user']), updateUser); // Lógica de permisos dentro del controller
 router.delete('/:id', authorize('admin'), deleteUser); // Solo admin
 
-export default router;
+// Ruta para que un administrador cambie la contraseña de un usuario
+router.put('/:id/password', authorize('admin'), changePassword);
 
+export default router;

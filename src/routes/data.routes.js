@@ -18,7 +18,7 @@ router.get('/', getAllMediciones);
 router.get('/search', getMedicionesSearch);
 router.get('/id/:id', getMedicionById);
 router.post('/', nuevaMedicion);
-router.put('/id/:id', actualizarMedicion);
-router.delete('/id/:id', eliminarMedicion);
+router.put('/id/:id', authorize('admin'), actualizarMedicion);
+router.delete('/id/:id', authorize('admin'), eliminarMedicion);
 
 export default router;

@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import * as UserModel from '../models/user.models.js';
+import * as AuditModel from '../models/audit.models.js';
+import generateToken from '../utils/token-generator.js';
 
 export async function registerUser(email, password, nombre) {
     const existingUser = await UserModel.findUserByEmail(email);
@@ -32,8 +33,35 @@ export async function loginUser(email, password) {
     }
 
     const tokenPayload = { id: user.id, email: user.email, rol: user.rol };
-    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = generateToken(tokenPayload);
 
     return { token };
 }
 
+export async function changeUserPassword(userId, newPassword, adminUser) {
+    const user = await UserModel.findUserById(userId);
+    if (!user) {
+        throw new Error('Usuario no encontrado.');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Reutilizamos la función updateUser del modelo para actualizar solo la contraseña
+    await UserModel.updateUser(userId, { password: hashedPassword });
+
+    // Registrar el evento de cambio de contraseña en el log de auditoría
+    try {
+        await AuditModel.createLog({
+            action: 'ADMIN_PASSWORD_CHANGE',
+            adminId: adminUser.id,
+            adminEmail: adminUser.email,
+            targetUserId: user.id,
+            targetUserEmail: user.email,
+        });
+    } catch (logError) {
+        // Si el log falla, no revertimos el cambio de contraseña, pero sí lo registramos en la consola.
+        console.error("Fallo al registrar el cambio de contraseña en la auditoría:", logError);
+    }
+
+    return true;
+}

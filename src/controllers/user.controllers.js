@@ -1,4 +1,5 @@
 import * as UserModel from '../models/user.models.js';
+import * as AuthService from '../services/auth.services.js';
 
 export async function getAllUsers(req, res) {
     try {
@@ -70,4 +71,30 @@ export async function deleteUser(req, res) {
 export async function getProfile(req, res) {
     // req.user es añadido por el middleware authenticateToken
     res.json(req.user);
+}
+
+export async function changePassword(req, res) {
+    try {
+        const { id } = req.params;
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ error: 'La nueva contraseña es requerida.' });
+        }
+
+        // Opcional: Añadir validación de la fortaleza de la contraseña
+        if (password.length < 6) {
+            return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
+        }
+
+        await AuthService.changeUserPassword(id, password, req.user);
+
+        res.status(200).json({ message: 'Contraseña actualizada correctamente.' });
+    } catch (error) {
+        if (error.message === 'Usuario no encontrado.') {
+            return res.status(404).json({ error: error.message });
+        }
+        console.error("Error en changePassword:", error);
+        res.status(500).json({ error: 'Error al cambiar la contraseña.', details: error.message });
+    }
 }
