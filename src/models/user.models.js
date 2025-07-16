@@ -1,77 +1,84 @@
 import { db } from "../data/data.js";
 import {
-    collection,
-    getDocs,
-    getDoc,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
-    query,
-    where
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+  limit,
 } from "firebase/firestore";
 
 const usuariosCollection = collection(db, "usuarios");
 
+// Utilidad interna para obtener un documento por email
+async function getUserDocByEmail(email) {
+  const q = query(usuariosCollection, where("email", "==", email), limit(1));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.empty ? null : querySnapshot.docs[0];
+}
+
 export async function findUserByEmail(email) {
-    const q = query(usuariosCollection, where("email", "==", email));
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-        return null;
-    }
-    const userDoc = querySnapshot.docs[0];
-    return { id: userDoc.id, ...userDoc.data() };
+  const userDoc = await getUserDocByEmail(email);
+  return userDoc ? { id: userDoc.id, ...userDoc.data() } : null;
 }
 
 export async function findUserById(id) {
-    const docRef = doc(db, "usuarios", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() };
-    }
-    return null;
+  const docSnap = await getDoc(doc(db, "usuarios", id));
+  return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
 }
 
 export async function createUser(userData) {
-    const newUserRef = await addDoc(usuariosCollection, userData);
-    return { id: newUserRef.id, ...userData };
+  const enrichedUserData = {
+    ...userData,
+    isEmailVerified: userData.isEmailVerified ?? false,
+    createdAt: userData.createdAt ?? Date.now(),
+  };
+  const newUserRef = await addDoc(usuariosCollection, enrichedUserData);
+  const { password, ...rest } = enrichedUserData; // Excluir password del return
+  return { id: newUserRef.id, ...rest };
 }
 
 export async function getAllUsers() {
-    const querySnapshot = await getDocs(usuariosCollection);
-    const users = [];
-    querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        // no devuelve la contraseña
-        delete data.password;
-        users.push({ id: doc.id, ...data });
-    });
-    return users;
+  const querySnapshot = await getDocs(usuariosCollection);
+  return querySnapshot.docs.map((doc) => {
+    const { password, ...data } = doc.data();
+    return { id: doc.id, ...data };
+  });
 }
 
 export async function updateUser(id, userData) {
-    const docRef = doc(db, "usuarios", id);
-    const docSnap = await getDoc(docRef);
+  const docRef = doc(db, "usuarios", id);
+  const docSnap = await getDoc(docRef);
 
-    if (!docSnap.exists()) {
-        return null;
-    }
+  if (!docSnap.exists()) return null;
 
-    await updateDoc(docRef, userData);
-    const updatedDoc = await getDoc(docRef);
-    const data = updatedDoc.data();
-    delete data.password; // No devolver la contraseña
-    return { id: updatedDoc.id, ...data };
+  await updateDoc(docRef, userData);
+  const { password, ...updatedData } = { ...docSnap.data(), ...userData };
+  return { id, ...updatedData };
 }
 
 export async function deleteUser(id) {
-    const docRef = doc(db, "usuarios", id);
-    const docSnap = await getDoc(docRef);
+  const docRef = doc(db, "usuarios", id);
+  const docSnap = await getDoc(docRef);
+  if (!docSnap.exists()) return false;
+  await deleteDoc(docRef);
+  return true;
+}
 
-    if (!docSnap.exists()) {
-        return false;
-    }
+export async function updateUserByEmail(email, data) {
+  const userDoc = await getUserDocByEmail(email);
+  if (!userDoc) throw new Error("Usuario no encontrado.");
+  await updateDoc(userDoc.ref, data);
+  return true;
+}
 
-    await deleteDoc(docRef);
-    return true;
+export async function deleteUserByEmail(email) {
+  const userDoc = await getUserDocByEmail(email);
+  if (!userDoc) return false;
+  await deleteDoc(userDoc.ref);
+  return true;
 }

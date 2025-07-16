@@ -6,7 +6,7 @@ export async function register(req, res) {
         if (!email || !password || !nombre) {
             return res.status(400).json({ error: 'Todos los campos son requeridos.' });
         }
-        const newUser = await AuthService.registerUser(email, password, nombre);
+        const newUser = await AuthService.registerUser(email, password, nombre); // Lógica para registrar un nuevo usuario
         res.status(201).json(newUser);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -25,5 +25,26 @@ export async function login(req, res) {
         res.status(401).json({ error: error.message });
     }
 }
+export async function verifyCode(req, res) {
+    try {
+        const { email, code } = req.body;
+        if (!email || !code) return res.status(400).json({ error: 'Email y código requeridos' });
 
+        await AuthService.verifyEmailCode(email, code); // Lógica para verificar el código de verificación
+        
+        res.json({ message: 'Código validado correctamente.' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+export async function resetPassword(req, res) {
+    try {
+        const { email, newPassword } = req.body;
+        if (!email || !newPassword) return res.status(400).json({ error: 'Faltan campos requeridos.' });
 
+        await AuthService.resetPasswordWithCode(email, newPassword);
+        res.json({ message: 'Contraseña actualizada correctamente.' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}

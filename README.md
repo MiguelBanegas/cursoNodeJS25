@@ -76,6 +76,17 @@ Registra un nuevo usuario. El primer usuario registrado obtiene automáticamente
         "password": "password123"
     }
     ```
+**`POST /auth/verify-code`**  
+`https://curso-node-js-25.vercel.app/api/v1/auth/verify-code`  
+Se ingresa el email y codigo que fue enviado al email registrado, para darlo como valido
+
+*   **Body (JSON):**
+    ```json
+    {
+        "email": "usuario@ejemplo.com",
+        "code": "123456"
+    }
+    ```
 
 **`POST /auth/login`**  
 `https://curso-node-js-25.vercel.app/api/v1/auth/login`  
@@ -92,6 +103,17 @@ Inicia sesión y devuelve un token JWT válido por 1 hora.
     ```json
     {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+    ```
+**`POST /auth/reset-password`**  
+`https://curso-node-js-25.vercel.app/api/v1/auth/reset-password`  
+Se ingresa el email y nueva contraseña.
+
+*   **Body (JSON):**
+    ```json
+    {
+        "email": "usuario@ejemplo.com",
+        "newPassword": "123456"
     }
     ```
 
