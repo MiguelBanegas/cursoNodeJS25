@@ -6,7 +6,7 @@ Incluye un sistema completo de autenticación y autorización basado en JSON Web
 ## Características
 
 - CRUD completo para mediciones.
-- Sistema de autenticación con registro y login.
+- Sistema de autenticación con registro y login, con verificacion de email y cambio de contraseña.
 - Autorización basada en roles (`admin`, `user`, `test`).
 - Endpoints protegidos mediante middleware JWT.
 - CRUD de usuarios para administradores.
@@ -46,6 +46,8 @@ Incluye un sistema completo de autenticación y autorización basado en JSON Web
     measurementId=TU_MEASUREMENT_ID_AQUI
     PORT=3000
     JWT_SECRET=TU_SECRETO_SUPER_SECRETO_Y_LARGO_AQUI
+    JWT_EXPIRES_IN= #eejmplo 1h (1 hora, puedes cambiarlo según tus necesidades)
+    RESEND_API_KEY=tu_resend_api_key_aqui  # Clave de API para Resend
     ```
 
 ## Iniciar la Aplicación
