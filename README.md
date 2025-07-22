@@ -67,7 +67,7 @@ Todos los endpoints están prefijados con `/api/v1`.
 ### Autenticación (`/auth`)
 
 **`POST /auth/register`**  
-`https://curso-node-js-25.vercel.app/api/v1/auth/register`  
+`https://mabcontrol.ar/api/v1/auth/register`  
 Registra un nuevo usuario. El primer usuario registrado obtiene automáticamente el rol de `admin`.
 
 *   **Body (JSON):**
@@ -79,7 +79,7 @@ Registra un nuevo usuario. El primer usuario registrado obtiene automáticamente
     }
     ```
 **`POST /auth/verify-code`**  
-`https://curso-node-js-25.vercel.app/api/v1/auth/verify-code`  
+`https://mabcontrol.ar/api/v1/auth/verify-code`  
 Se ingresa el email y codigo que fue enviado al email registrado, para darlo como valido
 
 *   **Body (JSON):**
@@ -91,7 +91,7 @@ Se ingresa el email y codigo que fue enviado al email registrado, para darlo com
     ```
 
 **`POST /auth/login`**  
-`https://curso-node-js-25.vercel.app/api/v1/auth/login`  
+`https://mabcontrol.ar/api/v1/auth/login`  
 Inicia sesión y devuelve un token JWT válido por 1 hora.
 
 *   **Body (JSON):**
@@ -108,7 +108,7 @@ Inicia sesión y devuelve un token JWT válido por 1 hora.
     }
     ```
 **`POST /auth/reset-password`**  
-`https://curso-node-js-25.vercel.app/api/v1/auth/reset-password`  
+`https://mabcontrol.ar/api/v1/auth/reset-password`  
 Se ingresa el email y nueva contraseña.
 
 *   **Body (JSON):**
@@ -124,24 +124,24 @@ Se ingresa el email y nueva contraseña.
 *Requiere autenticación (Bearer Token).
 
 **`GET /users/profile`**  
-`https://curso-node-js-25.vercel.app/api/v1/users/profile`  
+`https://mabcontrol.ar/api/v1/users/profile`  
 
 -   Obtiene el perfil del usuario autenticado. Ideal para probar un token.
 -   **Permisos:** Cualquier usuario autenticado.
 
 **`GET /users`**  
-`https://curso-node-js-25.vercel.app/api/v1/users`  
+`https://mabcontrol.ar/api/v1/users`  
 -   Obtiene una lista de todos los usuarios.
 -   **Permisos:** `admin`.
 
 **`GET /users/:id`**  
-`https://curso-node-js-25.vercel.app/api/v1/users/:id`  
+`https://mabcontrol.ar/api/v1/users/:id`  
 
 -   Obtiene un usuario específico por su ID.
 -   **Permisos:** `admin` (cualquier usuario), `user` (solo su propio perfil).
 
 **`PUT /users/:id`**  
-`https://curso-node-js-25.vercel.app/api/v1/users/:id`  
+`https://mabcontrol.ar/api/v1/users/:id`  
 
 -   Actualiza un usuario.
 -   **Permisos:** `admin` (puede cambiar `nombre`, `email`, `rol`), `user` (solo su `nombre` y `email`).
@@ -154,12 +154,12 @@ Se ingresa el email y nueva contraseña.
     ```
 
 **`DELETE /users/:id`**  
-`https://curso-node-js-25.vercel.app/api/v1/users/:id`  
+`https://mabcontrol.ar/api/v1/users/:id`  
 -   Elimina un usuario.
 -   **Permisos:** `admin`.
 
 **`PUT /users/:id/password`**  
-`https://curso-node-js-25.vercel.app/api/v1/users/:id/password`  
+`https://mabcontrol.ar/api/v1/users/:id/password`  
 
 - Ejemplo: `/lsDZ2LH0oLZWwRFDTLIl/password`
 -   Cambia la contraseña de un usuario específico.
@@ -195,7 +195,7 @@ Cada vez que un administrador realiza una acción sensible, como cambiar la cont
 
 
 ### Mediciones (`/mediciones`)
-`https://curso-node-js-25.vercel.app/api/v1/mediciones`  
+`https://mabcontrol.ar/api/v1/mediciones`  
 *Requiere autenticación (Bearer Token) y rol `user` o `admin`.*
 
 - **`GET /`**  
@@ -204,20 +204,20 @@ Cada vez que un administrador realiza una acción sensible, como cambiar la cont
 ### Obtener una medición por ID
 
 - **GET** `/id/:id`  
-  `https://curso-node-js-25.vercel.app/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
+  `https://mabcontrol.ar/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
 - Ejemplo: `/id/lsDZ2LH0oLZWwRFDTLIl`
 - Devuelve Json con el item con el ID especificado.
 
 ### Buscar mediciones
 
 - **GET** `/search?search=valor`  
-  `https://curso-node-js-25.vercel.app/api/v1/mediciones/search?search=esp32`  
+  `https://mabcontrol.ar/api/v1/mediciones/search?search=esp32`  
 - Busca mediciones por `idDisp`, `temp` o `hum` que incluyan el valor indicado, devuelve un Json.
 
 ### Crear una nueva medición
 
 - **POST** `/`  
-  `https://curso-node-js-25.vercel.app/api/v1/mediciones`  
+  `https://mabcontrol.ar/api/v1/mediciones`  
 - Enviar un JSON en el body con los datos de la medición:
   ```json
   {
@@ -231,7 +231,7 @@ Cada vez que un administrador realiza una acción sensible, como cambiar la cont
 ### Actualizar una medición
 
 - **PUT** `/id/:id`  
-  `https://curso-node-js-25.vercel.app/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
+  `https://mabcontrol.ar/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
 - Ejemplo: `/id/lsDZ2LH0oLZWwRFDTLIl`
 - Enviar un JSON en el body con los campos a modificar (por ejemplo, `temp` o `hum`): (solo Admin)
   ```json
@@ -244,7 +244,7 @@ Cada vez que un administrador realiza una acción sensible, como cambiar la cont
 ### Eliminar una medición
 
 - **DELETE** `/id/:id`  
-  `https://curso-node-js-25.vercel.app/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
+  `https://mabcontrol.ar/api/v1/mediciones/id/lsDZ2LH0oLZWwRFDTLIl`  
 - Ejemplo: `/id/lsDZ2LH0oLZWwRFDTLIl`
 - Elimina la medición con el ID especificado. (solo Admin)
 - Devuelve un Json con mensaje de confirmación y la medición eliminada.
