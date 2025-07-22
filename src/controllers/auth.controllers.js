@@ -7,9 +7,12 @@ export async function register(req, res) {
             return res.status(400).json({ error: 'Todos los campos son requeridos.' });
         }
         const newUser = await AuthService.registerUser(email, password, nombre); // Lógica para registrar un nuevo usuario
+        if (!newUser) {
+            return res.status(409).json({ error: 'El correo electrónico ya está en uso.' }); // Código 409 Conflict
+        }
         res.status(201).json(newUser);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Error interno del servidor.' }); // Cambiar a 500 para errores inesperados
     }
 }
 

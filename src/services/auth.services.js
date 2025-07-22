@@ -8,7 +8,7 @@ import { sendVerificationEmail } from "../utils/mailer.js"; // Importamos la fun
 export async function registerUser(email, password, nombre) {
   const existingUser = await UserModel.findUserByEmail(email);
   if (existingUser) {
-    throw new Error("El correo electrónico ya está en uso.");
+    return null; // Devuelve null si el usuario ya existe
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);

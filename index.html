@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitoreo IoT - Login/Registro</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+  <div class="flex justify-center items-center min-h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center" id="form-title">Iniciar Sesión</h2>
+      <form id="auth-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" id="email" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Contraseña</label>
+          <input type="password" id="password" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <div id="name-group" class="hidden">
+          <label class="block text-sm font-medium">Nombre</label>
+          <input type="text" id="nombre" class="w-full border border-gray-300 rounded px-3 py-2" />
+        </div>
+        <!-- Campo para el código de verificación, inicialmente oculto -->
+        <div id="code-group" class="hidden">
+          <label class="block text-sm font-medium">Código de Verificación</label>
+          <input type="text" id="code" class="w-full border border-gray-300 rounded px-3 py-2" />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Enviar</button>
+      </form>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        <span id="toggle-text">¿No tenés cuenta?</span>
+        <button id="toggle-mode" class="text-blue-600 hover:underline">Registrate</button>
+      </p>
+      <div id="result" class="mt-4 text-sm text-center"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('auth-form');
+    const toggleBtn = document.getElementById('toggle-mode');
+    const toggleText = document.getElementById('toggle-text');
+    const formTitle = document.getElementById('form-title');
+    const nameGroup = document.getElementById('name-group');
+    const resultDiv = document.getElementById('result');
+    const codeGroup = document.getElementById('code-group'); // Nuevo: Grupo del código de verificación
+    let mode = 'login';
+
+    toggleBtn.addEventListener('click', () => {
+      mode = mode === 'login' ? 'register' : 'login';
+      formTitle.textContent = mode === 'login' ? 'Iniciar Sesión' : 'Registrarse';
+      toggleText.textContent = mode === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?';
+      toggleBtn.textContent = mode === 'login' ? 'Registrate' : 'Iniciá sesión';
+      nameGroup.classList.toggle('hidden');
+      resultDiv.textContent = '';
+      // Mostrar u ocultar el campo de código de verificación según el modo
+      codeGroup.classList.add('hidden'); // Ocultar al cambiar entre login y register
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const nombre = document.getElementById('nombre').value;
+      const code = document.getElementById('code').value; // Nuevo: Obtener el código de verificación
+
+      let endpoint, payload;
+
+      if (mode === 'login') {
+        endpoint = 'https://mabcontrol.ar/api/v1/auth/login';
+        payload = { email, password };
+      } else if (codeGroup.classList.contains('hidden')) {
+        // Modo registro (obtener código)
+        endpoint = 'https://mabcontrol.ar/api/v1/auth/register';
+        payload = { nombre, email, password };
+      } else {
+        // Modo verificación de código
+        endpoint = 'https://mabcontrol.ar/api/v1/auth/verify-code';
+        payload = { email, code };
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          // Mostrar el mensaje de error específico de la API
+          throw new Error(data.message || 'Error desconocido');
+        }
+
+        if (mode === 'login') {
+          // Lógica de inicio de sesión
+          resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Sesión iniciada.</span>`;
+          localStorage.setItem('token', data.token);
+          setTimeout(() => window.location.href = '/dashboard.html', 1000);
+        } else if (codeGroup.classList.contains('hidden')) {
+          // Lógica de registro (solicitar código)
+          resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Registrado correctamente. Revisa tu email para verificar tu cuenta.</span>`;
+          codeGroup.classList.remove('hidden'); // Mostrar el campo de código
+          formTitle.textContent = 'Verificar Cuenta'; // Cambiar el título del formulario
+          document.querySelector('button[type="submit"]').textContent = 'Verificar'; // Cambiar el texto del botón
+          toggleBtn.classList.add('hidden'); // Ocultar el botón de cambio de modo
+        } else {
+          // Lógica de verificación de código
+          resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Cuenta verificada correctamente. Redirigiendo...</span>`;
+          setTimeout(() => window.location.href = '/dashboard.html', 1000); // Redirigir al dashboard
+        }
+      } catch (err) {
+        resultDiv.innerHTML = `<span class="text-red-600 font-bold">❌ ${err.message}</span>`;
+      }
+    });
+  </script>
+</body>
+
+</html>
