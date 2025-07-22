@@ -48,7 +48,8 @@ export async function loginUser(email, password) {
     throw new Error("Credenciales inválidas.");
   }
 
-  const tokenPayload = { id: user.id, email: user.email, rol: user.rol };
+  const tokenPayload = { id: user.id, email: user.email, rol: user.rol ,
+    nombre: user.nombre};
   const token = generateToken(tokenPayload);
 
   return { token };

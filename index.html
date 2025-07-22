@@ -93,7 +93,7 @@
 
         const data = await res.json();
         if (!res.ok) {
-            console.log('Error data:', data);
+          console.log('Error data:', data);
           // Si la respuesta no es OK, mostramos un mensaje de error
           // Mostrar el mensaje de error específico de la API
           throw new Error(data.error || 'Error desconocido');
@@ -103,7 +103,37 @@
           // Lógica de inicio de sesión
           resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Sesión iniciada.</span>`;
           localStorage.setItem('token', data.token);
-          setTimeout(() => window.location.href = '/dashboard.html', 1000);
+
+          // Obtener el perfil del usuario
+          const token = data.token;
+          const profileEndpoint = 'https://mabcontrol.ar/api/v1/users/profile';
+
+          try {
+            const profileRes = await fetch(profileEndpoint, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            });
+
+            const profileData = await profileRes.json();
+
+            if (!profileRes.ok) {
+              throw new Error(profileData.error || 'Error al obtener el perfil');
+            }
+
+            // Guardar el perfil en localStorage
+            localStorage.setItem('userProfile', JSON.stringify(profileData));
+            console.log('Perfil de usuario guardado:', profileData);
+            // Redirigir al dashboard
+            setTimeout(() => window.location.href = '/info.html', 5000);
+
+          } catch (profileErr) {
+            console.error('Error al obtener el perfil:', profileErr);
+            resultDiv.innerHTML = `<span class="text-red-600 font-bold">❌ Error al obtener el perfil: ${profileErr.message}</span>`;
+          }
+
         } else if (codeGroup.classList.contains('hidden')) {
           // Lógica de registro (solicitar código)
           resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Registrado correctamente. Revisa tu email para verificar tu cuenta.</span>`;

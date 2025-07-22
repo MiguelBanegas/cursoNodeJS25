@@ -17,13 +17,20 @@ const usuariosCollection = collection(db, "usuarios");
 // Utilidad interna para obtener un documento por email
 async function getUserDocByEmail(email) {
   const q = query(usuariosCollection, where("email", "==", email), limit(1));
+  // Limitamos a 1 para evitar múltiples resultados
   const querySnapshot = await getDocs(q);
-  return querySnapshot.empty ? null : querySnapshot.docs[0];
+  //console.log(`getUserDocByEmail: ${email} encontrado: ${querySnapshot.query}`);
+  const result = querySnapshot.empty ? null : querySnapshot.docs[0];
+  //console.log("Datos devueltos por getUserDocByEmail:", result); // Agregar console.log aquí
+  return result;
 }
 
 export async function findUserByEmail(email) {
   const userDoc = await getUserDocByEmail(email);
-  return userDoc ? { id: userDoc.id, ...userDoc.data() } : null;
+  const result = userDoc ? { id: userDoc.id, ...userDoc.data() } : null;
+  
+  //console.log("Datos devueltos por findUserByEmail:", result);
+  return result;
 }
 
 export async function findUserById(id) {
