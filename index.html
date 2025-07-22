@@ -94,9 +94,13 @@
         const data = await res.json();
         if (!res.ok) {
           // Mostrar el mensaje de error específico de la API
-          throw new Error(data.message || 'Error desconocido');
+          //throw new Error(data.message || 'Error desconocido');
+          const error = new Error(data.message || 'Error desconocido');
+          error.statusCode = res.status;
+          throw error;
         }
 
+        
         if (mode === 'login') {
           // Lógica de inicio de sesión
           resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Sesión iniciada.</span>`;

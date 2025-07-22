@@ -12,7 +12,8 @@ export async function register(req, res) {
         }
         res.status(201).json(newUser);
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor.' }); // Cambiar a 500 para errores inesperados
+        // Reenviar el mensaje de error específico desde AuthService
+        res.status(500).json({ error: error.message });
     }
 }
 
