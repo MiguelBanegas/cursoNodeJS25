@@ -96,11 +96,12 @@
           // Mostrar el mensaje de error específico de la API
           //throw new Error(data.message || 'Error desconocido');
           const error = new Error(data.message || 'Error desconocido');
+          console.log('Error:', error);
           error.statusCode = res.status;
           throw error;
         }
 
-        
+
         if (mode === 'login') {
           // Lógica de inicio de sesión
           resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Sesión iniciada.</span>`;
