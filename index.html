@@ -93,14 +93,11 @@
 
         const data = await res.json();
         if (!res.ok) {
+            console.log('Error data:', data);
+          // Si la respuesta no es OK, mostramos un mensaje de error
           // Mostrar el mensaje de error específico de la API
-          //throw new Error(data.message || 'Error desconocido');
-          const error = new Error(data.message || 'Error desconocido');
-          console.log('Error data.message:', data.message);
-          error.statusCode = res.status;
-          throw error;
+          throw new Error(data.error || 'Error desconocido');
         }
-
 
         if (mode === 'login') {
           // Lógica de inicio de sesión
