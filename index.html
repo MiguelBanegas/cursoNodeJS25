@@ -143,8 +143,14 @@
           toggleBtn.classList.add('hidden'); // Ocultar el botón de cambio de modo
         } else {
           // Lógica de verificación de código
-          resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Cuenta verificada correctamente. Redirigiendo...</span>`;
-          setTimeout(() => window.location.href = '/dashboard.html', 1000); // Redirigir al dashboard
+          if (data.message === 'Código validado correctamente.') {
+            resultDiv.innerHTML = `<span class="text-green-600 font-bold">✅ Cuenta verificada correctamente. Redirigiendo a Login...</span>`;
+            setTimeout(() => {
+              window.location.href = '/index.html'; // Redirigir a la página de inicio de sesión
+            }, 1000);
+          } else {
+            resultDiv.innerHTML = `<span class="text-red-600 font-bold">❌ Código de verificación incorrecto.</span>`;
+          }
         }
       } catch (err) {
         resultDiv.innerHTML = `<span class="text-red-600 font-bold">❌ ${err.message}</span>`;
